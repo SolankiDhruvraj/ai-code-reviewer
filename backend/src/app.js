@@ -15,7 +15,7 @@ app.use(cors(corsOptions))
 app.use('/ai', aiRoutes)
 
 app.listen(process.env.PORT, () => {
-    console.log("App running at port")
+    console.log("App running at port", process.env.PORT)
 })
 
 export default app;
