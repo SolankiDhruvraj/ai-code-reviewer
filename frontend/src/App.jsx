@@ -8,7 +8,9 @@ import axios from 'axios'
 import Markdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import "highlight.js/styles/github-dark.css"
+// import dotnev from 'dotenv'
 function App() {
+  // dotnev.config()
   const [code, setCode] = useState(`function add(a, b) {\n  return a + b;\n}`);
   const [review, setReview] = useState('')
   useEffect(() => {
@@ -16,7 +18,9 @@ function App() {
   }, []);
 
   async function reviewCode() {
-    const response = await axios.post('http://localhost:4000/ai/get-review', { code })
+    // console.log("-------", process.env.BACKEND_URL)
+    const response = await axios.post(`${import.meta.env.BACKEND_URL}/ai/get-review`, { code })
+    // const response = await axios.post(`http://localhost:3000/ai/get-review`, { code })
     setReview(response.data)
   }
   return (
