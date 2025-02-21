@@ -18,8 +18,8 @@ function App() {
   }, []);
 
   async function reviewCode() {
-    console.log("-------", import.meta.env.BACKEND_URL)
-    const response = await axios.post(`${import.meta.env.BACKEND_URL}/ai/get-review`, { code })
+    console.log("-------", import.meta.env.VITE_BACKEND_URL)
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/ai/get-review`, { code })
     // const response = await axios.post(`http://localhost:3000/ai/get-review`, { code })
     setReview(response.data)
   }
