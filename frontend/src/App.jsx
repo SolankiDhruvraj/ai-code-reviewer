@@ -22,6 +22,7 @@ function App() {
     // const response = await axios.post(`http://localhost:3000/ai/get-review`, { code })
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const apiUrl = new URL("/ai/get-review", backendUrl).href;
+    console.log(apiUrl)
     const response = await axios.post(apiUrl, { code })
     setReview(response.data)
   }
