@@ -1,31 +1,41 @@
-import './App.css'
-import { useState, useEffect } from 'react'
-import "prismjs/themes/prism-tomorrow.css"
-import Editor from 'react-simple-code-editor'
-import prismjs from 'prismjs'
-import "prismjs/components/prism-javascript" // Ensure JavaScript syntax is loaded
-import axios from 'axios'
-import Markdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
-import "highlight.js/styles/github-dark.css"
-// import dotnev from 'dotenv'
+import './App.css';
+import { useState, useEffect } from 'react';
+import "prismjs/themes/prism-tomorrow.css";
+import Editor from 'react-simple-code-editor';
+import prismjs from 'prismjs';
+import "prismjs/components/prism-javascript"; // Ensure JavaScript syntax is loaded
+import axios from 'axios';
+import Markdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import "highlight.js/styles/github-dark.css";
+
 function App() {
-  // dotnev.config()
   const [code, setCode] = useState(`function add(a, b) {\n  return a + b;\n}`);
-  const [review, setReview] = useState('')
+  const [review, setReview] = useState('');
+
   useEffect(() => {
     prismjs.highlightAll();
   }, []);
 
   async function reviewCode() {
-    // console.log("-------", import.meta.env.VITE_BACKEND_URL)
-    // const response = await axios.post(`http://localhost:3000/ai/get-review`, { code })
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const apiUrl = new URL("/ai/get-review", backendUrl).href;
-    console.log("--------", apiUrl)
-    const response = await axios.post(`https:${apiUrl}`, { code })
-    setReview(response.data)
+
+    if (!backendUrl) {
+      console.error("VITE_BACKEND_URL is not defined. Check your .env file.");
+      return;
+    }
+
+    const apiUrl = `${backendUrl}/ai/get-review`;
+    console.log("Final API URL:", apiUrl);
+
+    try {
+      const response = await axios.post(apiUrl, { code });
+      setReview(response.data);
+    } catch (error) {
+      console.error("Error calling API:", error);
+    }
   }
+
   return (
     <main>
       <div className="left">
@@ -50,7 +60,7 @@ function App() {
         <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
       </div>
     </main>
-  )
+  );
 }
 
 export default App;
