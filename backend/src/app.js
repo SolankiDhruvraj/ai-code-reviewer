@@ -6,7 +6,7 @@ import aiRoutes from './routes/ai.routes.js'
 
 const app = express()
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,
+    origin: [process.env.FRONTEND_URL, "chrome-extension://*", "http://localhost:5173"],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', "Authorization"]
 }
