@@ -23,6 +23,10 @@ const model = genAI.getGenerativeModel({
 ` }
 );
 
+const charLimit = 1000
+if (prompt.length > 1000) {
+    throw new Error("Chracters limit execeed 1000 charcaters")
+}
 const generateContent = async (prompt) => {
     const result = await model.generateContent(prompt);
     return result.response.text();
